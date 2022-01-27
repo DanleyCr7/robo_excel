@@ -13,12 +13,11 @@ use App\Http\Controllers\TurmaController;
 |
 */
 
-Route::get('file-import-export', [TurmaController::class, 'fileImportExport']);
+// Route::get('file-import-export', [TurmaController::class, 'fileImportExport']);
 Route::post('file-import', [TurmaController::class, 'fileImport'])->name('file-import');
 Route::get('automatizando', [TurmaController::class, 'automatizarInsercao']);
 Route::get('file-export', [TurmaController::class, 'fileExport'])->name('file-export');
+Route::get('limpando-dados', [TurmaController::class, 'limparDados'])->name('limpo');
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [TurmaController::class, 'fileImportExport']);
