@@ -8,59 +8,47 @@ use Illuminate\Support\Facades\Schema;
 use DB;
 use Carbon\Carbon;
 
-class TurmasImport implements ToModel
+class MatriculasImport implements ToModel
 {
 
     public function processarLinha($linha)
     {
-        ini_set('memory_limit', '-1');
-        ini_set('max_execution_time', '300');
     // verificando linha
     if (str_contains($linha, ',')) {
         $dados = array_filter(explode(',', str_replace(["\r", "\n", "\t", "\v"], ' ', $linha)), function ($item) {
         return !empty($item);
     });
-    
-    dump($dados[0]);
-    dump((!empty($dados[1]) ? $dados[1] : '- - -'));
-    dump('============');
-    // DB::table('turmas')->insert(
-    //     array(
-    //         'idTurma' => !empty($dados[0]) ? (int) $dados[0] : null,
-    //         'Descricao' => !empty($dados[1]) ? $dados[1] : null,
-    //         'Status' => !empty($dados[2]) ? $dados[2] : null,
-    //         'codTurmaNova_cpi' => !empty($dados[9]) ? $dados[9] : '',
-    //    )
-    // );
 
-        // $table->string($row[0], 150);
-        // $table->string($row[1],150);
-        // $table->string($row[2],150);
-        // $table->string($row[9],150);
+        DB::table('matriculas')->insert(
+        array(
+              "DataMatricula" => !empty($dados[0]) ? $dados[0] : null,
+              "idUsuario" => !empty($dados[1]) ? $dados[1] : null,
+              "idAluno" => !empty($dados[2]) ? str_replace( ['"'] ,'', $dados[2]) : null,
+              "Matricula" => !empty($dados[3]) ? str_replace( ['"'] ,'', $dados[3]) : null,
+              "idTurma" => !empty($dados[6]) ? str_replace( ['"'] ,'', $dados[6]) : null,
+              "ordemAluno" => !empty($dados[7]) ? $dados[7] : null,
+              "id_antigo" => !empty($dados[21]) ? str_replace(['"'] ,'', $dados[21]) : null,         
+        ));
 
     }
 
     }
 
     public function model(array $row)
-    {
-        ini_set('memory_limit', '-1');
-        ini_set('max_execution_time', '300');
-
-            // dd($row);
-            // exit;
-        //   \Schema::create('turmas', function ($table) use ($row) {
+    {    
+        //   \Schema::create('matriculas', function ($table) use ($row) {
         //     $table->increments('id');
-        //     $table->string($row[0], 150);
-        //     $table->string($row[1],150);
-        //     $table->string($row[2],150);
-        //     $table->string($row[9],150);
+        //     $table->text($row[0], 150)->nullable();
+        //     $table->text($row[1], 150)->nullable();
+        //     $table->text($row[2],150)->nullable();
+        //     $table->text($row[3],150)->nullable();
+        //     $table->text($row[6],150)->nullable();
+        //     $table->text($row[7],150)->nullable();
+        //     $table->text($row[21],150)->nullable();
         //   });
-
         $this->processarLinha($row[0]);
         
     }
-
    
 
     function tirarAcentos($string){

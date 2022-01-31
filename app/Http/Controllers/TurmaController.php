@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\TurmasImport;
 use App\Imports\MensalidadesImport;
+use App\Imports\MatriculasImport;
 use App\Imports\MensalidadesAcordoImport;
+use App\Imports\MatriculasAcordoImport;
 
 use App\Models\Turma;
 
@@ -38,8 +40,9 @@ class TurmaController extends Controller
     */
     public function fileImport(Request $request) 
     {
-        // Excel::import(new TurmasImport, $request->file('file')->store('temp'));
-        Excel::import(new MensalidadesImport, $request->file('file')->store('temp'));
+        Excel::import(new TurmasImport, $request->file('file')->store('temp'));
+        // Excel::import(new MensalidadesImport, $request->file('file')->store('temp'));
+        // Excel::import(new MatriculasImport, $request->file('file')->store('temp'));
         // Excel::import(new MensalidadesAcordoImport, $request->file('file')->store('temp'));
         exit;
         return back();

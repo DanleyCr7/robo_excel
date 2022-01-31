@@ -18,20 +18,21 @@ class MensalidadesImport implements ToModel
         $dados = array_filter(explode(',', str_replace(["\r", "\n", "\t", "\v"], ' ', $linha)), function ($item) {
         return !empty($item);
     });
+
     
         DB::table('responsavels')->insert(
         array(
               "idResponsavel" => !empty($dados[0]) ? $dados[0] : null,
               "Nome" => !empty($dados[1]) ? $dados[1] : null,
-              "RG" => !empty($dados[2]) ? $dados[2] : null,
-              "CPF" => !empty($dados[3]) ? $dados[3] : null,
-              "Profissao" => !empty($dados[4]) ? $dados[4] : null,
+              "RG" => !empty($dados[2]) ? str_replace( ['"'] ,'', $dados[2]) : null,
+              "CPF" => !empty($dados[3]) ? str_replace( ['"'] ,'', $dados[3]) : null,
+              "Profissao" => !empty($dados[4]) ? str_replace( ['"'] ,'', $dados[4]) : null,
               "foneTrabalho" => !empty($dados[5]) ? $dados[5] : null,
-              "idAluno" => !empty($dados[7]) ? $dados[7] : null,
+              "idAluno" => !empty($dados[7]) ? str_replace(['"'] ,'', $dados[7]) : null,
               "Celular" => !empty($dados[9]) ? $dados[9] : null,
               "Endereco" => !empty($dados[10]) ? $dados[10] : null,
               "Bairro" => !empty($dados[11]) ? $dados[11] : null,
-              "CEP" => !empty($dados[12]) ? $dados[12] : null,
+              "CEP" => !empty($dados[12]) ? str_replace( ['"'] ,'', $dados[12]) : null,
               "UF" => !empty($dados[15]) ? $dados[15] : null,
               "Naturalidade" => !empty($dados[18]) ? $dados[18] : null,
               "Nacionalidade" => !empty($dados[19]) ? $dados[19] : null,
@@ -84,6 +85,41 @@ class MensalidadesImport implements ToModel
         //   });
         $this->processarLinha($row[0]);
         
+    }
+
+    public function matriculas(array $row)
+    {
+        dd($row);
+        exit;
+        // \Schema::create('responsavels', function ($table) use ($row) {
+        // $table->increments('id');
+        // $table->text($row[0], 150)->nullable();
+        // $table->text($row[1], 150)->nullable();
+        // $table->text($row[2],150)->nullable();
+        // $table->text($row[3],150)->nullable();
+        // $table->text($row[4],150)->nullable();
+        // $table->text($row[5],150)->nullable();
+        // $table->text($row[7],150)->nullable();
+        // $table->text($row[9],150)->nullable();
+        // $table->text($row[10],150)->nullable();
+        // $table->text($row[11],150)->nullable();
+        // $table->text($row[12],150)->nullable();
+        // $table->text($row[15],150)->nullable();
+        // $table->text($row[18],150)->nullable();
+        // $table->text($row[19],150)->nullable();
+        // $table->text($row[23],150)->nullable();
+        // $table->text($row[24],150)->nullable();
+        // $table->text($row[25],150)->nullable();
+        // $table->text($row[30],150)->nullable();
+        // $table->text($row[31],150)->nullable();
+        // $table->text($row[32],150)->nullable();
+        // $table->text($row[33],150)->nullable();
+        // $table->text($row[34],150)->nullable();
+        // $table->text($row[35],150)->nullable();
+        // $table->text($row[44],150)->nullable();
+        // });
+        $this->processarLinha($row[0]);
+
     }
 
    
